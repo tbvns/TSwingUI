@@ -3,14 +3,10 @@ package xyz.tbvns;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class RoundedButton extends AbstractButton {
+public class TRoundedButton extends AbstractButton {
     Color backgroundColor, hoverColor, clickColor, textColor = Color.BLACK;
     int borderRadius;
     boolean isButtonHovered = false;
@@ -19,7 +15,7 @@ public class RoundedButton extends AbstractButton {
 
     @Override
     public void setBounds(int x, int y, int width, int height) {
-        super.setBounds(x, y, width, height);
+        super.setBounds(x, y + 3, width, height);
         label.setBounds(0, 0, width, height);
     }
 
@@ -28,7 +24,7 @@ public class RoundedButton extends AbstractButton {
         label.setForeground(color);
     }
 
-    public RoundedButton(String text, Color backgroundColor, Color hoverColor, Color clickColor, int borderRadius) {
+    public TRoundedButton(String text, Color backgroundColor, Color hoverColor, Color clickColor, int borderRadius) {
         setText(text);
         setBackground(backgroundColor);
         this.backgroundColor = backgroundColor;
@@ -40,6 +36,8 @@ public class RoundedButton extends AbstractButton {
         label.setAlignmentX(CENTER_ALIGNMENT);
         label.setAlignmentY(CENTER_ALIGNMENT);
         add(label);
+
+        setHorizontalTextPosition(SwingConstants.RIGHT);
 
         addMouseListener(new MouseListener() {
             @Override
@@ -82,38 +80,22 @@ public class RoundedButton extends AbstractButton {
 
     @Override
     public void paint(Graphics g) {
+        if (enableShadow) {
+            g.setColor(new Color(0, 0, 0, 52));
+            g.fillRoundRect(0, 4, this.getWidth()-1, this.getHeight()-4, borderRadius, borderRadius);
+        }
         g.setColor(getBackground());
-        g.fillRoundRect(0, 0, this.getWidth()-1, this.getHeight()-1, borderRadius, borderRadius);
+        g.fillRoundRect(0, 0, this.getWidth()-1, this.getHeight()-4, borderRadius, borderRadius);
         super.paint(g);
+    }
+
+    boolean enableShadow = false;
+    public void setEnableShadow(boolean value) {
+        enableShadow = value;
     }
 
     @Override
     public void update(Graphics g) {
         paint(g);
-    }
-}
-
-class RoundedBorder implements Border {
-
-    private int radius;
-
-
-    RoundedBorder(int radius) {
-        this.radius = radius;
-    }
-
-
-    public Insets getBorderInsets(Component c) {
-        return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
-    }
-
-
-    public boolean isBorderOpaque() {
-        return true;
-    }
-
-    @Override
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
     }
 }

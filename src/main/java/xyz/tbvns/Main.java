@@ -1,17 +1,40 @@
 package xyz.tbvns;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        JFrame frame = new JFrame("Hello world !");
+        frame.setSize(500, 500);
+        frame.setLayout(null);
+        UIManager.put("Button.select", new Color(0, 0, 0, 0));
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        TRoundedButton button = new TRoundedButton("test", new Color(40, 132, 254), new Color(63, 152, 241), new Color(123, 198, 255), 30);
+        button.setBounds(250, 250, 70, 35);
+        button.setTextColor(Color.WHITE);
+        button.setEnableShadow(true);
+
+        TTextField field = new TTextField("Hello world", new Color(41, 41, 41), new Color(64, 145, 255), new Color(128, 207, 255), 10);
+        field.setBounds(20, 20, 200, 30);
+        field.createRoundedBorder(2);
+        field.setTextColor(Color.WHITE);
+
+        TComboBox comboBox = new TComboBox(new String[]{"hello", "world"}, new Color(41, 41, 41), new Color(0, 186, 255), new Color(255, 255, 255), new Color(200, 200, 200), new Color(0, 235, 255), 10);
+        comboBox.setBounds(30, 400, 100, 30);
+        comboBox.createRoundedBorder(2);
+
+        TCheckBox checkBox = new TCheckBox("TCheckBox", new Color(41, 41, 41), Color.WHITE, Color.BLACK);
+        checkBox.setBounds(0, 100, 100, 100);
+
+        frame.add(checkBox);
+        frame.add(button);
+        frame.add(field);
+        frame.add(comboBox);
+
+        frame.setVisible(true);
     }
 }

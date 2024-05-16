@@ -4,37 +4,39 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TCellRenderer extends JLabel implements ListCellRenderer<Object> {
+    Color background, hovered, TextColor, SelectedTextColor;
+
+    public TCellRenderer(Color background, Color hovered, Color TextColor, Color SelectedTextColor) {
+        this.background = background;
+        this.hovered = hovered;
+        this.TextColor = TextColor;
+        this.SelectedTextColor = SelectedTextColor;
+        setBackground(background);
+    }
+
+
 
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         setText(value.toString());
 
+        setOpaque(true);
+
         Color background;
         Color foreground;
 
-        // check if this cell represents the current DnD drop location
-        JList.DropLocation dropLocation = list.getDropLocation();
-        if (dropLocation != null &&
-           !dropLocation.isInsert() &&
-           dropLocation.getIndex() == index) {
-
-            background = Color.BLUE;
-            foreground = Color.WHITE;
-
-        // check if this cell is selected
-        } else if (isSelected) {
-            background = Color.RED;
-            foreground = Color.WHITE;
+         if (isSelected) {
+            background = hovered;
+            foreground = TextColor;
 
         // unselected, and not the DnD drop location
         } else {
-            background = Color.WHITE;
-            foreground = Color.BLACK;
+            background = this.background;
+            foreground = this.SelectedTextColor;
         };
 
         setBackground(background);
         setForeground(foreground);
-
         return this;
     }
 }
