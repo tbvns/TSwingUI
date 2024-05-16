@@ -6,27 +6,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class TCheckBox extends JLabel {
-    JLabel tick = new JLabel("✓");
-    JLabel text;
+    TCheckBoxIcon icon;
     boolean selected = false;
     Color backgroundColor;
     public TCheckBox(String text, Color backgroundColor, Color tickColor, Color labelColor) {
+        super(text);
+        icon = new TCheckBoxIcon(backgroundColor, tickColor);
         this.backgroundColor = backgroundColor;
-
-        tick.setBounds(3, 2, 12, 12);
-        tick.setForeground(tickColor);
-        add(tick);
-
-        this.text = new JLabel(text);
-        this.text.setBounds(18, -7, 100, 30);
-        this.text.setForeground(labelColor);
-        add(this.text);
+        setForeground(labelColor);
+        setIcon(icon);
 
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 selected = !selected;
-                tick.setVisible(selected);
                 repaint();
             }
 
@@ -54,8 +47,7 @@ public class TCheckBox extends JLabel {
 
     @Override
     public void paint(Graphics g) {
-        g.setColor(backgroundColor);
-        g.fillRoundRect(0, 0, 15, 15, 15, 15);
+        icon.isActive = selected;
         super.paint(g);
     }
 }
